@@ -45,12 +45,7 @@ shareBtn.addEventListener('click', () => {
       setStatus('Jaettu telkkariin ✓', false);
     } else {
       const msg = response.error || 'Välilehteä ei voitu jakaa';
-      // Surface user-friendly messages
-      if (msg.includes('fetch') || msg.includes('Failed') || msg.includes('network')) {
-        setStatus('Bridge ei vastaa', true);
-      } else {
-        setStatus(msg, true);
-      }
+      setStatus(msg, true);
     }
   });
 });

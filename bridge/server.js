@@ -13,6 +13,35 @@ const samsungRemote = require('./services/samsungRemote');
 const PORT = 3847;
 const app = express();
 
+// ── Simple rate limiter ───────────────────────────────────────────────────────
+// Guards file-serving and API routes against accidental or malicious flooding.
+// Uses an in-memory sliding window; no external package required.
+
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;  // 1 minute
+const RATE_LIMIT_MAX = 120;              // requests per window per IP
+
+const rateLimitMap = new Map();
+
+function rateLimit(req, res, next) {
+  const ip = req.ip || req.connection.remoteAddress || 'unknown';
+  const now = Date.now();
+  let entry = rateLimitMap.get(ip);
+
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    entry = { windowStart: now, count: 0 };
+    rateLimitMap.set(ip, entry);
+  }
+
+  entry.count += 1;
+
+  if (entry.count > RATE_LIMIT_MAX) {
+    res.status(429).json({ ok: false, error: 'Too many requests' });
+    return;
+  }
+
+  next();
+}
+
 // ── Middleware ────────────────────────────────────────────────────────────────
 
 app.use(express.json());
@@ -63,7 +92,7 @@ app.get('/api/history', (req, res) => {
 });
 
 // Receive a new share from the Chrome extension
-app.post('/share', (req, res) => {
+app.post('/share', rateLimit, (req, res) => {
   const validation = validateAndNormalizeShare(req.body);
 
   if (!validation.ok) {
@@ -89,7 +118,7 @@ app.post('/share', (req, res) => {
 
 // TV receiver page – served via static middleware above (public/tv.html)
 // Explicit route for /tv in case someone navigates there without a filename
-app.get('/tv', (req, res) => {
+app.get('/tv', rateLimit, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'tv.html'));
 });
 

@@ -3,7 +3,7 @@
 
 'use strict';
 
-function format(level, scope, message, meta) {
+function format(scope, message, meta) {
   const prefix = `[ANOMCAST][${scope.toUpperCase()}]`;
   if (meta !== undefined) {
     return `${prefix} ${message} ${typeof meta === 'object' ? JSON.stringify(meta) : meta}`;
@@ -12,15 +12,15 @@ function format(level, scope, message, meta) {
 }
 
 function info(scope, message, meta) {
-  console.log(format('INFO', scope, message, meta));
+  console.log(format(scope, message, meta));
 }
 
 function warn(scope, message, meta) {
-  console.warn(format('WARN', scope, message, meta));
+  console.warn(format(scope, message, meta));
 }
 
 function error(scope, message, meta) {
-  console.error(format('ERROR', scope, message, meta));
+  console.error(format(scope, message, meta));
 }
 
 module.exports = { info, warn, error };
