@@ -1,0 +1,17 @@
+{
+  "name": "anomcast-bridge",
+  "version": "0.1.0",
+  "description": "Local bridge for ANOMCAST – receives shares from Chrome and serves the TV receiver page.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}

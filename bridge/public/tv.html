@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANOMCAST – TV</title>
+  <link rel="stylesheet" href="tv.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="header">
+      <span class="app-label">ANOMCAST</span>
+    </header>
+
+    <main class="main" id="content-area">
+
+      <!-- Empty state: shown when no share exists -->
+      <div class="state-empty" id="state-empty">
+        <p class="empty-msg">Ei jaettua sisältöä vielä.</p>
+        <p class="empty-hint">Jaa sivu Chrome-laajennuksella.</p>
+      </div>
+
+      <!-- Share state: shown when a share is available -->
+      <div class="state-share hidden" id="state-share">
+        <div class="favicon-wrap" id="favicon-wrap">
+          <img class="favicon" id="favicon" src="" alt="" aria-hidden="true" />
+        </div>
+        <h1 class="share-title" id="share-title"></h1>
+        <a class="share-url" id="share-url" href="#" target="_blank" rel="noopener noreferrer"></a>
+        <p class="share-time" id="share-time"></p>
+      </div>
+
+      <!-- Error state: shown when fetch fails -->
+      <div class="state-error hidden" id="state-error">
+        <p class="error-msg">Bridge ei vastaa.</p>
+        <p class="error-hint">Varmista, että bridge on käynnissä PC:llä.</p>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <span class="footer-status" id="footer-status">Yhdistetään…</span>
+    </footer>
+
+  </div>
+  <script src="tv.js"></script>
+</body>
+</html>
