@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "ANOMCAST",
+  "version": "0.1.0",
+  "description": "Jaa selaimesta suoraan Samsung Smart TV:lle paikallisverkossa.",
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:3847/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ANOMCAST – Jaa telkkariin"
+  },
+  "commands": {
+    "share-tab": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Jaa nykyinen välilehti telkkariin"
+    }
+  }
+}

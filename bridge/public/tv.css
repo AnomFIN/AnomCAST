@@ -1,0 +1,181 @@
+/* tv.css – ANOMCAST TV receiver page styles
+   Designed for large screens (55"–75" TV) at comfortable viewing distance.
+   Dark theme, large typography, clean hierarchy. */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:         #0a0a0a;
+  --surface:    #141414;
+  --accent:     #1a6ef5;
+  --text-primary:   #f0f0f0;
+  --text-secondary: #999;
+  --text-url:       #6ab0ff;
+  --text-error:     #e05555;
+  --radius:     12px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Page layout ────────────────────────────────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+
+.header {
+  padding: 36px 60px 0;
+}
+
+.app-label {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ── Main content ────────────────────────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────────── */
+
+.state-empty {
+  text-align: center;
+}
+
+.empty-msg {
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.empty-hint {
+  font-size: 28px;
+  color: #555;
+}
+
+/* ── Share state ─────────────────────────────────────────────────────────────── */
+
+.state-share {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.favicon-wrap {
+  width: 72px;
+  height: 72px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.favicon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+/* Hide favicon container when no favicon available */
+.favicon-wrap.hidden {
+  display: none;
+}
+
+.share-title {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.share-url {
+  font-size: 32px;
+  color: var(--text-url);
+  text-decoration: none;
+  word-break: break-all;
+  line-height: 1.4;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.share-url:hover,
+.share-url:focus {
+  border-color: var(--text-url);
+  outline: none;
+}
+
+.share-time {
+  font-size: 24px;
+  color: var(--text-secondary);
+}
+
+/* ── Error state ─────────────────────────────────────────────────────────────── */
+
+.state-error {
+  text-align: center;
+}
+
+.error-msg {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--text-error);
+  margin-bottom: 16px;
+}
+
+.error-hint {
+  font-size: 28px;
+  color: #555;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────── */
+
+.footer {
+  padding: 0 60px 32px;
+  text-align: right;
+}
+
+.footer-status {
+  font-size: 20px;
+  color: #444;
+}
+
+/* ── Utility ─────────────────────────────────────────────────────────────────── */
+
+.hidden {
+  display: none !important;
+}

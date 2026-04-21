@@ -1,0 +1,74 @@
+/* popup.css – ANOMCAST popup styling */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 300px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0f0f0f;
+  color: #e8e8e8;
+  padding: 20px 18px 18px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.app-tagline {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.share-btn {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: #1a6ef5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+.share-btn:hover:not(:disabled) {
+  background: #1558cc;
+}
+
+.share-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status {
+  min-height: 18px;
+  font-size: 12px;
+  text-align: center;
+  transition: color 0.2s;
+}
+
+.status--ok {
+  color: #4caf7d;
+}
+
+.status--error {
+  color: #e05555;
+}
