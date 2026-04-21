@@ -14,16 +14,27 @@ const PORT = 3847;
 const app = express();
 
 // ── Simple rate limiter ───────────────────────────────────────────────────────
-// Guards file-serving and API routes against accidental or malicious flooding.
+// Guards all routes against accidental or malicious flooding.
 // Uses an in-memory sliding window; no external package required.
+// Node.js is single-threaded, so no synchronization primitives are needed.
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;  // 1 minute
 const RATE_LIMIT_MAX = 120;              // requests per window per IP
 
 const rateLimitMap = new Map();
 
+// Periodically clean up expired entries to prevent unbounded memory growth
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap.entries()) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS);
+
 function rateLimit(req, res, next) {
-  const ip = req.ip || req.connection.remoteAddress || 'unknown';
+  const ip = req.ip || req.socket.remoteAddress || 'unknown';
   const now = Date.now();
   let entry = rateLimitMap.get(ip);
 
@@ -45,6 +56,9 @@ function rateLimit(req, res, next) {
 // ── Middleware ────────────────────────────────────────────────────────────────
 
 app.use(express.json());
+
+// Apply rate limiting to all incoming requests
+app.use(rateLimit);
 
 // Allow cross-origin requests from the Chrome extension (127.0.0.1)
 app.use((req, res, next) => {
@@ -92,7 +106,7 @@ app.get('/api/history', (req, res) => {
 });
 
 // Receive a new share from the Chrome extension
-app.post('/share', rateLimit, (req, res) => {
+app.post('/share', (req, res) => {
   const validation = validateAndNormalizeShare(req.body);
 
   if (!validation.ok) {
@@ -118,7 +132,7 @@ app.post('/share', rateLimit, (req, res) => {
 
 // TV receiver page – served via static middleware above (public/tv.html)
 // Explicit route for /tv in case someone navigates there without a filename
-app.get('/tv', rateLimit, (req, res) => {
+app.get('/tv', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'tv.html'));
 });
 

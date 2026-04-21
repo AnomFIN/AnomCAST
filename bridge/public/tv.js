@@ -38,7 +38,7 @@
     if (!timestamp) return '';
     try {
       var d = new Date(timestamp);
-      return d.toLocaleTimeString('fi-FI', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      return d.toLocaleTimeString('fi-FI', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
     } catch (e) {
       return '';
     }

@@ -99,7 +99,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
   const payload = {
     url,
-    title: url,  // link text not available via contextMenus in MV3
+    title: info.selectionText || url,  // selectionText provides link text when available
     favicon: null,
     timestamp: Date.now()
   };
